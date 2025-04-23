@@ -1,3 +1,5 @@
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +24,18 @@ public class UserController {
         return userService.findById(id);
     }
 
+    //@PostMapping
+    //public  User postUser(@RequestBody User user) {
+      //  return userService.createUser(user);
+    //}
     @PostMapping
-    public  User postUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<String> createUser(@RequestBody User user) {
+       try {
+           userService.createUser(user);
+           return ResponseEntity.status(HttpStatus.CREATED).body("User created");
+       } catch (Exception e) {
+           return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
+       }
     }
 
     @DeleteMapping
