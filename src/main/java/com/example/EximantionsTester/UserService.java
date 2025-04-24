@@ -1,3 +1,5 @@
+package com.example.EximantionsTester;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +22,6 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        if(userRepository.existsById(user.getId())) {
-            throw new RuntimeException("User already exists");
-        }
         return userRepository.save(user);
     }
 

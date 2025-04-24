@@ -1,5 +1,10 @@
+import com.example.EximantionsTester.User;
+import com.example.EximantionsTester.UserRepository;
+import com.example.EximantionsTester.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -21,18 +26,24 @@ class UserServiceTest {
 
         verify(mockedUserRepository).save(user);
     }
-    // Detta test testar om användaren redan finns så kommer skriva en runtime exepction
     @Test
-    void registerUserShouldThrowExceptionWhenUserAlreadyExists() {
+    void testGetUsernameWithId() {
+        // Arrange
+        User expectedUser = new User(1L, "John", "@Doe");
         UserRepository mockedUserRepository = Mockito.mock(UserRepository.class);
+        when(mockedUserRepository.findById(1L)).thenReturn(Optional.of(expectedUser));
+
         UserService userService = new UserService(mockedUserRepository);
-        User user = new User(1L,"John","Doe");
 
-        when(mockedUserRepository.existsById(1L)).thenReturn(true);
+        // Act
+        Optional<User> actualUser = userService.findById(1L);
 
-        assertThrows(RuntimeException.class, () -> userService.createUser(user));
 
-      verify(mockedUserRepository, never()).save(any(User.class));
+        // Assert
+        assertEquals(expectedUser.getName(), actualUser.get().getName());
+        assertEquals(expectedUser.getEmail(), actualUser.get().getEmail());
+        assertEquals(expectedUser.getId(), actualUser.get().getId());
+
     }
 
 }

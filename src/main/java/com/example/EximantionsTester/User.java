@@ -1,9 +1,9 @@
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package com.example.EximantionsTester;
+
+import jakarta.persistence.*;
 
 @Entity
+@Table( name ="Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,11 @@ public class User {
 
     public User() {
 
+    }
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
     }
 
     public Long getId() {
