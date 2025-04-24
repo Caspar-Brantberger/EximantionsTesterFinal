@@ -41,9 +41,10 @@ class UserControllerTest {
     }
 
     //KomponentTest
+    //Detta test testar att UserController isolerat för att kolla att getUserById returnar rätt användare när användaren finns.
 
     @Test
-     public void testgetUser() {
+     public void testgetUserByIdReturnsCorrectUser() {
 
         User user = new User(1L, "John", "@Doe");
         when(mockRepo.findById(1L)).thenReturn(Optional.of(user));

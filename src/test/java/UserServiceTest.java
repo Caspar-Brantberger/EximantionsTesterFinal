@@ -12,7 +12,8 @@ import static org.mockito.ArgumentMatchers.any;
 
 class UserServiceTest {
 
-    //Denna kod testar att användaren inte redan finns, men utan att att använda en riktig databas eller spring.
+    //Enhetstest
+    //Detta test testar att createUser i userService funkar korrekt genom att spara en användare ,men bara om de inte redan finns.
     @Test
     void registerUserShouldCallRepositorySave() {
 
@@ -26,20 +27,21 @@ class UserServiceTest {
 
         verify(mockedUserRepository).save(user);
     }
+
+    //Enhetstest
+    //Kollar om UserService.findbyId returnerar rätt användare med id
     @Test
     void testGetUsernameWithId() {
-        // Arrange
+
         User expectedUser = new User(1L, "John", "@Doe");
         UserRepository mockedUserRepository = Mockito.mock(UserRepository.class);
         when(mockedUserRepository.findById(1L)).thenReturn(Optional.of(expectedUser));
 
         UserService userService = new UserService(mockedUserRepository);
 
-        // Act
+
         Optional<User> actualUser = userService.findById(1L);
 
-
-        // Assert
         assertEquals(expectedUser.getName(), actualUser.get().getName());
         assertEquals(expectedUser.getEmail(), actualUser.get().getEmail());
         assertEquals(expectedUser.getId(), actualUser.get().getId());

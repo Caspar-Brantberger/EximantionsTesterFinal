@@ -15,16 +15,20 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ActiveProfiles("test")
+@ActiveProfiles("test")//Testar på en test fil med en databas som droppas efter varje gång det körts så ingen känslig information sparats.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = EximantionsTesterApplication.class)
 public class UserIntergrationTests {
 
+    //För att ha en port
     @LocalServerPort
     private int port;
 
+    //Testar riktiga endPoints utan MockMVC
+    //Gör HTTP anrop i applikationen.(GET,POST,PUT,DELETE)
     @Autowired
     private TestRestTemplate restTemplate;
 
+    //Skickar en HTTP till /user för att skapa en ny användare, sedan hämtaar via HTTP GET sedan verifieras att den sparats korrekt.
     @Test
     public void testCreateAndGetUserByHttp(){
        User user = new User();
